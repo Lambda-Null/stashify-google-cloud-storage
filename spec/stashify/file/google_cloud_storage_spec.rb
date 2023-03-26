@@ -6,7 +6,7 @@ require "securerandom"
 
 require "stashify/file/google_cloud_storage"
 
-RSpec.describe Stashify::File::GoogleCloudStorage do
+RSpec.describe Stashify::File::GoogleCloudStorage, gcloud: true do
   around(:each) do |s|
     SpecUtils.temp_cloud_storage do |bucket|
       @bucket = bucket

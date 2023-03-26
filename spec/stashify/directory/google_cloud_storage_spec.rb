@@ -4,7 +4,7 @@ require "stashify/file"
 
 require "stashify/directory/google_cloud_storage"
 
-RSpec.describe Stashify::Directory::GoogleCloudStorage do
+RSpec.describe Stashify::Directory::GoogleCloudStorage, gcloud: true do
   around(:each) do |s|
     SpecUtils.temp_cloud_storage do |bucket|
       @bucket = bucket
