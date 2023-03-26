@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
 
   # Uncomment to register a new dependency of your gem
   spec.add_dependency "google-cloud-storage", "~> 1.44.0"
-  spec.add_dependency "stashify", "~> 1.0.1"
+  spec.add_dependency "stashify", "~> 1.0.4"
 
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html

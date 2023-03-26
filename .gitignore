@@ -9,3 +9,9 @@
 
 # rspec failure tracking
 .rspec_status
+
+# debugging
+.byebug_history
+
+# publishing gem
+*.gem

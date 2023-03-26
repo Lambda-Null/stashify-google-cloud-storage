@@ -12,6 +12,8 @@ RSpec.describe Stashify::Directory::GoogleCloudStorage do
     end
   end
 
+  let(:property_count) { 10 }
+
   let(:properties) do
     property_of do
       path = array(5) do
@@ -24,7 +26,7 @@ RSpec.describe Stashify::Directory::GoogleCloudStorage do
   end
 
   it "reads a file" do
-    properties.check(10) do |path, contents|
+    properties.check(property_count) do |path, contents|
       @bucket.create_file(StringIO.new(contents), path)
       dir = Stashify::Directory::GoogleCloudStorage.new(@bucket, File.dirname(path))
       file = dir.find(File.basename(path))
@@ -33,11 +35,50 @@ RSpec.describe Stashify::Directory::GoogleCloudStorage do
   end
 
   it "reads a directory" do
-    properties.check(10) do |path, contents|
+    properties.check(property_count) do |path, contents|
       @bucket.create_file(StringIO.new(contents), File.join(path, "foo"))
       dir = Stashify::Directory::GoogleCloudStorage.new(@bucket, File.dirname(path))
       subdir = dir.find(File.basename(path))
       expect(subdir).to eq(Stashify::Directory::GoogleCloudStorage.new(@bucket, path))
+    end
+  end
+
+  it "writes a file" do
+    properties.check(property_count) do |path, contents|
+      dir = Stashify::Directory::GoogleCloudStorage.new(@bucket, File.dirname(path))
+      dir.write(Stashify::File.new(name: File.basename(path), contents: contents))
+      expect(@bucket.file(path).download.string).to eq(contents)
+    end
+  end
+
+  it "writes a directory" do
+    properties.check(property_count) do |path, contents|
+      source_dir = Stashify::Directory::GoogleCloudStorage.new(@bucket, File.dirname(path))
+      file = Stashify::File.new(name: File.basename(path), contents: contents)
+      source_dir.write(file)
+      SpecUtils.temp_cloud_storage do |bucket|
+        target_dir = Stashify::Directory::GoogleCloudStorage.new(bucket, "")
+        target_dir.write(source_dir)
+        expect(target_dir.find(source_dir.name).find(File.basename(path))).to eq(file)
+      end
+    end
+  end
+
+  it "deletes a file" do
+    properties.check(property_count) do |path, contents|
+      @bucket.create_file(StringIO.new(contents), path)
+      Stashify::Directory::GoogleCloudStorage.new(@bucket, File.dirname(path)).delete(File.basename(path))
+      expect(@bucket.file(path)).to be_nil
+    end
+  end
+
+  it "deletes a directory" do
+    properties.check(property_count) do |path, contents|
+      dir = Stashify::Directory::GoogleCloudStorage.new(@bucket, File.dirname(path))
+      subdir = Stashify::Directory::GoogleCloudStorage.new(@bucket, path)
+      subdir.write(Stashify::File.new(name: "foo", contents: contents))
+      dir.delete(subdir.name)
+      expect(dir.find(subdir.name)).to be_nil
     end
   end
 end
