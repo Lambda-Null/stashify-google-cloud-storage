@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require_relative "lib/stashify/google_cloud_storage/version"
+require_relative "lib/stashify/google/cloud/storage/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "stashify-google_cloud_storage"
-  spec.version = Stashify::GoogleCloudStorage::VERSION
+  spec.name = "stashify-google-cloud-storage"
+  spec.version = Stashify::Google::Cloud::Storage::VERSION
   spec.authors = ["Lambda Null"]
   spec.email = ["lambda.null.42@gmail.com"]
 
   spec.summary = "A Google Cloud Storage implementation of the Stashify abstraction"
   spec.description = "Interact with Google Cloud Storage using the common building blocks provided by Stashify"
-  spec.homepage = "https://github.com/Lambda-Null/stashify-google_cloud_storage"
+  spec.homepage = "https://github.com/Lambda-Null/stashify-google-cloud-storage"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
 
@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
 
   # Uncomment to register a new dependency of your gem
   spec.add_dependency "google-cloud-storage", "~> 1.44.0"
-  spec.add_dependency "stashify", "~> 1.0.4"
+  spec.add_dependency "stashify", "~> 2.1.1"
 
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html

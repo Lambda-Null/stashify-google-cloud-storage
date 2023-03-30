@@ -4,9 +4,9 @@ require "google/cloud/storage"
 
 require "securerandom"
 
-require "stashify/file/google_cloud_storage"
+require "stashify/file/google/cloud/storage"
 
-RSpec.describe Stashify::File::GoogleCloudStorage, gcloud: true do
+RSpec.describe Stashify::File::Google::Cloud::Storage, gcloud: true do
   around(:each) do |s|
     SpecUtils.temp_cloud_storage do |bucket|
       @bucket = bucket
@@ -28,7 +28,7 @@ RSpec.describe Stashify::File::GoogleCloudStorage, gcloud: true do
   it "takes a bucket and a path for the constructor" do
     properties.check(10) do |path, contents|
       @bucket.create_file(StringIO.new(contents), path)
-      file = Stashify::File::GoogleCloudStorage.new(@bucket, path)
+      file = Stashify::File::Google::Cloud::Storage.new(bucket: @bucket, path: path)
       expect(file.name).to eq(File.basename(path))
       expect(file.contents).to eq(contents)
     end

@@ -3,7 +3,7 @@
 require "google/cloud/storage"
 require "rantly/rspec_extensions"
 
-require "stashify/google_cloud_storage"
+require "stashify/google/cloud/storage"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

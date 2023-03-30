@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    stashify-google_cloud_storage (0.1.0)
+    stashify-google-cloud-storage (2.0.0)
       google-cloud-storage (~> 1.44.0)
-      stashify (~> 1.0.4)
+      stashify (~> 2.1.1)
 
 GEM
   remote: https://rubygems.org/
@@ -141,7 +141,7 @@ GEM
       rubocop-ast (>= 1.26.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 3.0)
-    rubocop-ast (1.27.0)
+    rubocop-ast (1.28.0)
       parser (>= 3.2.1.0)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
@@ -151,7 +151,7 @@ GEM
       faraday (>= 0.17.5, < 3.a)
       jwt (>= 1.5, < 3.0)
       multi_json (~> 1.10)
-    stashify (1.0.4)
+    stashify (2.1.1)
     thor (1.2.1)
     trailblazer-option (0.1.2)
     uber (0.1.0)
@@ -172,7 +172,7 @@ DEPENDENCIES
   reek (~> 6.1.4)
   rspec (~> 3.0)
   rubocop (~> 1.21)
-  stashify-google_cloud_storage!
+  stashify-google-cloud-storage!
 
 BUNDLED WITH
    2.2.33
