@@ -16,17 +16,6 @@ module Stashify
             super(path: path)
           end
 
-          def write_file(file)
-            @bucket.create_file(
-              StringIO.new(file.contents),
-              path_of(file.name),
-            )
-          end
-
-          def delete_file(name)
-            @bucket.file(path_of(name)).delete
-          end
-
           def files
             @bucket.files.map do |gcloud_file|
               find(::Regexp.last_match(1)) if gcloud_file.name =~ %r{^#{Regexp.escape(path)}/([^/]*)(/.*)?$}

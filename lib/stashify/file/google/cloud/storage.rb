@@ -15,6 +15,17 @@ module Stashify
           def contents
             @bucket.file(path).download.string
           end
+
+          def write(contents)
+            @bucket.create_file(
+              StringIO.new(contents),
+              path,
+            )
+          end
+
+          def delete
+            @bucket.file(path).delete
+          end
         end
       end
     end
