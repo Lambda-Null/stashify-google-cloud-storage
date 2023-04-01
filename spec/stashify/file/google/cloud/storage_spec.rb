@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "google/cloud/storage"
-
 require "securerandom"
+require "stashify/contract/file_contract"
 
 require "stashify/file/google/cloud/storage"
 
@@ -14,23 +14,15 @@ RSpec.describe Stashify::File::Google::Cloud::Storage, gcloud: true do
     end
   end
 
-  let(:properties) do
-    property_of do
-      path = array(5) do
-        dir = string
-        guard dir !~ %r{/}
-        dir
-      end
-      [File.join(path), string]
-    end
+  include_context "file setup", 2
+
+  before(:each) do
+    @bucket.create_file(StringIO.new(contents), path)
   end
 
-  it "takes a bucket and a path for the constructor" do
-    properties.check(10) do |path, contents|
-      @bucket.create_file(StringIO.new(contents), path)
-      file = Stashify::File::Google::Cloud::Storage.new(bucket: @bucket, path: path)
-      expect(file.name).to eq(File.basename(path))
-      expect(file.contents).to eq(contents)
-    end
+  subject(:file) do
+    Stashify::File::Google::Cloud::Storage.new(bucket: @bucket, path: path)
   end
+
+  it_behaves_like "a file"
 end

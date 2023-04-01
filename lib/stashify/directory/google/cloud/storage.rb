@@ -16,17 +16,18 @@ module Stashify
             super(path: path)
           end
 
+          def parent
+            Stashify::Directory::Google::Cloud::Storage.new(
+              bucket: @bucket,
+              path: ::File.dirname(path),
+            )
+          end
+
           def files
             @bucket.files.map do |gcloud_file|
               find(::Regexp.last_match(1)) if gcloud_file.name =~ %r{^#{Regexp.escape(path)}/([^/]*)(/.*)?$}
             end.compact
           end
-
-          def ==(other)
-            self.class == other.class && @bucket == other.bucket && path == other.path
-          end
-
-          private
 
           def directory?(name)
             path = path_of(name)
@@ -37,12 +38,16 @@ module Stashify
             Stashify::Directory::Google::Cloud::Storage.new(bucket: @bucket, path: path_of(name))
           end
 
-          def file?(name)
+          def exists?(name)
             @bucket.file(path_of(name))
           end
 
           def file(name)
             Stashify::File::Google::Cloud::Storage.new(bucket: @bucket, path: path_of(name))
+          end
+
+          def ==(other)
+            self.class == other.class && @bucket == other.bucket && path == other.path
           end
         end
       end
