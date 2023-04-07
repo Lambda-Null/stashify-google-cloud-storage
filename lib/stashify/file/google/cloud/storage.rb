@@ -6,6 +6,10 @@ module Stashify
   class File
     module Google
       module Cloud
+        # An implementation for interacting with files in Google Cloud
+        # Storage buckets. The constructor needs an instance of
+        # Google::Cloud::Storage::Bucket in order to know which bucket
+        # to interact with.
         class Storage < Stashify::File
           def initialize(bucket:, path:)
             @bucket = bucket

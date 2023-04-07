@@ -8,6 +8,11 @@ module Stashify
   class Directory
     module Google
       module Cloud
+        # An implementation for interacting with Google Cloud Storage
+        # buckets as if they had directories with "/" as a path
+        # separator. In addition to a path, it also needs a
+        # Google::Cloud::Storage::Bucket object representing the
+        # bucket the file resides within.
         class Storage < Stashify::Directory
           attr_reader :bucket
 

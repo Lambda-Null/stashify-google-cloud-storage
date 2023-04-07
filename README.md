@@ -1,15 +1,13 @@
 # Stashify::GoogleCloudStorage
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/stashify/google_cloud_storage`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This is an implementation of the [Stashify](https://rubydoc.info/gems/stashify) abstraction for Google Cloud Storage. It operates under the assumption that the "/" in file names has the typical meaning of a path separater.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'stashify-google_cloud_storage'
+gem 'stashify-google-cloud-storage'
 ```
 
 And then execute:
@@ -18,11 +16,35 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install stashify-google_cloud_storage
+    $ gem install stashify-google-cloud-storage
 
 ## Usage
 
-TODO: Write usage instructions here
+This implementation is built on top of an instance of `Google::Cloud::Storage::Bucket`. The following usage is an abbreviated form to illustrate how to engage in this particular library. For a more extensive example see [Stashify's Usage](https://rubydoc.info/gems/stashify#usage).
+
+```ruby
+> require "google/cloud/storage"
+=> true
+> storage = Google::Cloud::Storage.new(project_id: "some-project-id")
+> bucket = storage.bucket("some-bucket-name")
+> require "stashify/file/google/cloud/storage"
+=> true
+> file = Stashify::File::Google::Cloud::Storage.new(bucket: bucket, path: "pa
+th/to/file")
+=> 
+#<Stashify::File::Google::Cloud::Storage:0x000055af8eb86800
+...
+> file.contents
+=> "foo"
+> require "stashify/directory/google/cloud/storage"
+=> true
+> dir = Stashify::Directory::Google::Cloud::Storage.new(bucket: bucket, path: "path/to")
+=> 
+#<Stashify::Directory::Google::Cloud::Storage:0x000055af8ebd6918
+...
+> dir.find("file") == file
+=> true
+```
 
 ## Development
 
