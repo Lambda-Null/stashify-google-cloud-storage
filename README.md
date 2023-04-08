@@ -29,8 +29,7 @@ This implementation is built on top of an instance of `Google::Cloud::Storage::B
 > bucket = storage.bucket("some-bucket-name")
 > require "stashify/file/google/cloud/storage"
 => true
-> file = Stashify::File::Google::Cloud::Storage.new(bucket: bucket, path: "pa
-th/to/file")
+> file = Stashify::File::Google::Cloud::Storage.new(bucket: bucket, path: "path/to/file")
 => 
 #<Stashify::File::Google::Cloud::Storage:0x000055af8eb86800
 ...

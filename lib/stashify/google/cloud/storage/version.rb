@@ -4,7 +4,7 @@ module Stashify
   module Google
     module Cloud
       module Storage
-        VERSION = "3.1.1"
+        VERSION = "3.1.2"
       end
     end
   end
